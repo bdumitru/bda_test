@@ -44,6 +44,10 @@ const processFile = async (fileBuffer, projectArn = bdaProjectArn) => {
     const inputFiles = await readdir(inputFolder)
 
     for (const inputFile of inputFiles) {
+        if (inputFile === '.gitignore') {
+            continue;
+        };
+
         const fileBuffer = await readFile(`${inputFolder}/${inputFile}`);
         const resultJsons = await processFile(fileBuffer);
         await writeFile(`${outputFolder}/${inputFile}.json`, JSON.stringify(resultJsons));
